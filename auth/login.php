@@ -21,60 +21,125 @@ if (isset($_SESSION['error'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Styling sederhana untuk tampilan lebih baik */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
         }
+
         form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        label, input {
-            display: block;
-            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
             width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
-        input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        form h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #a29bfe;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(162, 155, 254, 0.3);
+        }
+
         button {
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
+            width: 100%;
+            padding: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            background: #6c5ce7;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
+
         button:hover {
-            background-color: #218838;
+            background: #5a4ac7;
         }
+
         .error {
             color: red;
-            margin-bottom: 10px;
+            background-color: #ffe5e5;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            background-color: #e5ffea;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
     <form action="auth.php" method="post">
+        <h2>Login</h2>
+
         <?php if (!empty($error_message)): ?>
             <div class="error"><?= htmlspecialchars($error_message) ?></div>
         <?php endif; ?>
 
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" required>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required>
+        </div>
 
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+        </div>
 
         <button type="submit" name="login">Login</button>
     </form>
