@@ -8,11 +8,13 @@ $success_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
     // Validasi input kosong
-    if (empty($username) || empty($password) || empty($confirm_password)) {
+    if (empty($username) ||  $email = $_POST['email'] ||
+    empty($password) || empty($confirm_password)) {
         $error_message = "ISI CUKIMAYY";
     } elseif ($password !== $confirm_password) {
         $error_message = "GA SAMA KOCAK PASSWORDNYA";
@@ -26,8 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':username', $email);
+        $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            $error_message = "Username sudah terdaftar, silakan pilih yang lain.";
+            $error_message = "Email udah kepake kocak";
         } else {
             // Masukkan data ke database
             $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
@@ -169,6 +175,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="username">Username</label>
             <input type="text" name="username" id="username" required>
         </div>
+        <div class="input-group">
+            <label for="username">email</label>
+            <input type="text" name="email" id="email" required>
+        </div>
+
 
         <div class="input-group">
             <label for="password">Password</label>
