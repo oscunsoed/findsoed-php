@@ -20,8 +20,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
-                    <a class="btn btn-outline-primary me-3" aria-current="page" href="#">Daftar</a>
-                    <a class="btn btn-primary" aria-current="page" href="#">Login</a>
+                    <a class="btn btn-outline-primary me-3" aria-current="page" href="/auth/regis.php">Daftar</a>
+                    <a class="btn btn-primary" aria-current="page" href="/auth/login.php">Login</a>
                 </div>
             </div>
         </div>
