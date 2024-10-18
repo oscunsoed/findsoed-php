@@ -1,0 +1,7 @@
+-- Active: 1727027839628@@127.0.0.1@3306@findsoed
+CREATE TABLE barang_hilang (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nama VARCHAR(255) NOT NULL,
+    deskripsi VARCHAR(255) NOT NULL,
+    status VARCHAR(20)
+);
