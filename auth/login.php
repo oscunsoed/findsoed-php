@@ -17,6 +17,7 @@ if (isset($_SESSION['error'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,22 +32,27 @@ if (isset($_SESSION['error'])) {
             height: 100vh;
             background-color: #f0f0f0;
         }
+
         form {
             background: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        label, input {
+
+        label,
+        input {
             display: block;
             margin: 10px 0;
             width: 100%;
         }
+
         input {
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         button {
             padding: 10px;
             background-color: #28a745;
@@ -55,15 +61,18 @@ if (isset($_SESSION['error'])) {
             border-radius: 5px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #218838;
         }
+
         .error {
             color: red;
             margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
     <form action="auth.php" method="post">
         <?php if (!empty($error_message)): ?>
@@ -79,4 +88,5 @@ if (isset($_SESSION['error'])) {
         <button type="submit" name="login">Login</button>
     </form>
 </body>
+
 </html>
