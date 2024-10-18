@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php'; // Pastikan file koneksi sudah ada
+include '../database/db.php'; // Pastikan file koneksi sudah ada
 
 // Cek apakah tombol login ditekan
 if (isset($_POST['login'])) {
