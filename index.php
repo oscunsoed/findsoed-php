@@ -1,5 +1,13 @@
 <?php
 include "database/db.php";
+
+session_start();
+
+// Jika pengguna belum login, redirect ke halaman login.php
+if (!isset($_SESSION["username"])) {
+    header("Location: /auth/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +40,7 @@ include "database/db.php";
     </nav>
 
     <!-- MAIN -->
-    <main class="vh-100">
+    <main class="">
         <div class="container py-5">
             <div class="row justify-content-center mb-4">
                 <div class="col-6">
@@ -45,47 +53,43 @@ include "database/db.php";
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://avatars.githubusercontent.com/u/184643885?s=200&v=4" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
+            <?php
+            $sql = "SELECT * FROM barang_hilang";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://avatars.githubusercontent.com/u/184643885?s=200&v=4" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
+            echo '<div class="row mb-3">';
 
-                <div class="col-4">
+            foreach ($items as $index => $item) {
+                // Start a new row for every 3 items
+                if ($index % 3 == 0 && $index != 0) {
+                    echo '</div><div class="row">';
+                }
+            ?>
+                <div class="col-4 d-flex justify-content-center">
                     <div class="card" style="width: 18rem;">
                         <img src="https://avatars.githubusercontent.com/u/184643885?s=200&v=4" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <h5 class="card-title"><?php echo $item['nama'] ?></h5>
+                            <p class="card-text"><?php echo $item['deskripsi'] ?></p>
+                            <a href="/<?php echo $item['id'] ?>" class="btn btn-primary">Detail</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php
+            }
+            // Close the last row
+            echo '</div>';
+
+            ?>
         </div>
     </main>
 
     <!-- FOOTER -->
     <div class="row bg-warning-subtle">
         <div class="cols-12">
-            <p class="text-center py-3 m-0">copyright OSC 2024</p>
+            <p class="text-center py-3 m-0">&copy; OSC 2024</p>
         </div>
     </div>
     <!-- BOOTSTRAP JS -->
