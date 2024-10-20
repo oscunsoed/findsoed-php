@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
 
     // Query untuk mendapatkan data user berdasarkan username
     $sql = "SELECT * FROM users WHERE username = :username";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $conn->prepare($sql);
     $stmt->bindParam(':username', $username);
     $stmt->execute();
 

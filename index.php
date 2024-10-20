@@ -8,6 +8,20 @@ if (!isset($_SESSION["username"])) {
     header("Location: /auth/login.php");
     exit();
 }
+
+$search_result = [];
+
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    
+    // Query untuk mencari barang berdasarkan nama dengan prepared statements
+    $query = "SELECT * FROM barang WHERE nama_barang LIKE :search";
+    $stmt = $conn->prepare($query);
+    $stmt->execute(['search' => '%' . $search . '%']); // Menggunakan wildcard untuk pencarian
+
+    // Mendapatkan semua hasil sebagai array asosiatif
+    $search_result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,18 +54,19 @@ if (!isset($_SESSION["username"])) {
     </nav>
 
     <!-- MAIN -->
-    <main class="">
+    <main class="vh-100">
         <div class="container py-5">
             <div class="row justify-content-center mb-4">
                 <div class="col-6">
-                    <form action="" class="d-flex gap-3">
+                    <!-- Form pencarian -->
+                    <form action="" method="GET" class="d-flex gap-3">
                         <div class="w-100">
-                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Cari barang...">
+                            <input type="text" name="search" class="form-control" placeholder="Cari barang...">
                         </div>
-                        <button class="btn btn-primary">Cari</button>
+                        <button class="btn btn-primary" type="submit">Cari</button>
                     </form>
                 </div>
-            </div>
+            </div>            
 
             <?php
             $sql = "SELECT * FROM barang_hilang";
@@ -84,6 +99,28 @@ if (!isset($_SESSION["username"])) {
 
             ?>
         </div>
+
+        <!-- Tampilkan hasil pencarian -->
+        <div class="row">
+                <?php if (!empty($search_result)) : ?>
+                    <?php foreach ($search_result as $barang) : ?>
+                        <div class="col-4">
+                            <div class="card" style="width: 18rem;">
+                                <img src="<?= $barang['gambar'] ?>" class="card-img-top" alt="<?= $barang['nama_barang'] ?>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= $barang['nama_barang'] ?></h5>
+                                    <p class="card-text"><?= $barang['deskripsi'] ?></p>
+                                    <a href="#" class="btn btn-primary">Lihat detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p class="text-center">Barang tidak ditemukan</p>
+                <?php endif; ?>
+            </div>
+        </div>
+
     </main>
 
     <!-- FOOTER -->
